@@ -1,34 +1,28 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Observers;
-
-use App\Listeners\isAdmin;
-use App\Listeners\isConnected;
-
 
 class EventManager
 {
-
     private $listeners;
 
-    function __construct()
+    public function __construct()
     {
-        $this->listeners = array(
-            new isConnected(),
-            new isAdmin()
-        );
+        $this->listeners = [];
     }
 
-    public function subcribe($eventType, $listener)
+    public function subcribe($listener): void
     {
-        array_push($listeners, $eventType, $listener);
+        array_push($this->listeners, new $listener());
     }
 
-    public function dispatch($eventType, $data)
+    public function notify($eventType, $data): void
     {
         foreach ($this->listeners as $listener) {
             if ($listener->getName() == $eventType) {
-                $listener->notify($data);
+                $listener->update($data);
             }
         }
     }
