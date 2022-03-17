@@ -25,7 +25,7 @@ $authenticateListener = new AuthenticateListener();
 $observer->subcribe($adminListener);
 $observer->subcribe($authenticateListener);
 
-$observer->notify('AdminListener', $router);
 $observer->notify('AuthenticateListener', $router);
+$observer->notify('AdminListener', $router);
 
 $router->getController();
